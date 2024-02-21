@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Henryon Astélie | Portfolio</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS -->
+  <link href="assets/css/light.css" rel="stylesheet" id="stylesheet">
+  <style>
+    /* Default */
+    .theme {
+      display: flex;
+      align-items: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .theme__fill,
+    .theme__icon {
+      pointer-events: none;
+      transition: transform var(--transDur) ease-in-out;
+    }
+    .theme__fill {
+      background-color: var(--bg);
+      display: block;
+      mix-blend-mode: difference;
+      position: fixed;
+      inset: 0;
+      height: 100%;
+      transform: translateX(-100%);
+    }
+    .theme__icon,
+    .theme__toggle {
+      z-index: 1;
+    }
+    .theme__icon,
+    .theme__icon-part {
+      position: absolute;
+    }
+    .theme__icon {
+      display: block;
+      top: 0.75em;
+      left: 0.75em;
+      width: 1.5em;
+      height: 1.5em;
+    }
+    .theme__icon-part {
+      border-radius: 50%;
+      box-shadow: 0.4em -0.4em 0 0.5em hsl(0, 0%, 100%) inset;
+      top: calc(50% - 0.5em);
+      left: calc(50% - 0.5em);
+      width: 1em;
+      height: 1em;
+      transition: box-shadow var(--transDur) ease-in-out,
+        opacity var(--transDur) ease-in-out, transform var(--transDur) ease-in-out;
+      transform: scale(0.5);
+    }
+    .theme__icon-part ~ .theme__icon-part {
+      background-color: hsl(0, 0%, 100%);
+      border-radius: 0.05em;
+      box-shadow: none;
+      top: 50%;
+      left: calc(50% - 0.05em);
+      transform: rotate(0) translateY(0.5em);
+      transform-origin: 50% 0;
+      width: 0.1em;
+      height: 0.2em;
+    }
+    .theme__icon-part:nth-child(3) {
+      transform: rotate(45deg) translateY(0.5em);
+    }
+    .theme__icon-part:nth-child(4) {
+      transform: rotate(90deg) translateY(0.5em);
+    }
+    .theme__icon-part:nth-child(5) {
+      transform: rotate(135deg) translateY(0.5em);
+    }
+    .theme__icon-part:nth-child(6) {
+      transform: rotate(180deg) translateY(0.5em);
+    }
+    .theme__icon-part:nth-child(7) {
+      transform: rotate(225deg) translateY(0.5em);
+    }
+    .theme__icon-part:nth-child(8) {
+      transform: rotate(270deg) translateY(0.5em);
+    }
+    .theme__icon-part:nth-child(9) {
+      transform: rotate(315deg) translateY(0.5em);
+    }
+    .theme__label,
+    .theme__toggle,
+    .theme__toggle-wrap {
+      position: relative;
+    }
+    .theme__toggle,
+    .theme__toggle::before {
+      display: block;
+    }
+    .theme__toggle {
+      background-color: #CEE5F2;
+      border-radius: 25% / 50%;
+      box-shadow: 0 0 0 0.125em var(--primaryT);
+      padding: 0.25em;
+      width: 6em;
+      height: 3em;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      transition: background-color var(--transDur) ease-in-out,
+        box-shadow 0.15s ease-in-out, transform var(--transDur) ease-in-out;
+    }
+    .theme__toggle::before {
+      background-color: hsl(48, 90%, 55%);
+      border-radius: 50%;
+      content: '';
+      width: 2.5em;
+      height: 2.5em;
+      transition: background-color var(--transDur) ease-in-out,
+        transform var(--transDur) ease-in-out;
+    }
+    .theme__toggle:focus {
+      box-shadow: 0 0 0 0.125em var(--primary);
+      outline: transparent;
+    }
+    /* Checked */
+    .theme__toggle:checked {
+      background-color: hsl(198, 90%, 15%);
+    }
+    .theme__toggle:checked::before,
+    .theme__toggle:checked ~ .theme__icon {
+      transform: translateX(3em);
+    }
+    .theme__toggle:checked::before {
+      background-color: hsl(198, 90%, 55%);
+    }
+    .theme__toggle:checked ~ .theme__fill {
+      transform: translateX(0);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(1) {
+      transform: scale(1);
+      box-shadow: 0.2em -0.2em 0 0.2em hsl(0, 0%, 100%) inset;
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part ~ .theme__icon-part {
+      opacity: 0;
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(2) {
+      transform: rotate(45deg) translateY(0.8em);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(3) {
+      transform: rotate(90deg) translateY(0.8em);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(4) {
+      transform: rotate(135deg) translateY(0.8em);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(5) {
+      transform: rotate(180deg) translateY(0.8em);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(6) {
+      transform: rotate(225deg) translateY(0.8em);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(7) {
+      transform: rotate(270deg) translateY(0.8em);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(8) {
+      transform: rotate(315deg) translateY(0.8em);
+    }
+    .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(9) {
+      transform: rotate(360deg) translateY(0.8em);
+    }
+    .theme__toggle-wrap {
+      margin: 0 0.75em;
+    }
+
+  </style>
+
+</head>
+
+<!-- The videos -->
+<video autoplay muted loop id="myVideo">
+  <source src="assets/img/anim-final.mp4" type="video/mp4">
+</video>
+
+<video autoplay muted loop id="myVideoDark" style="display: none;">
+  <source src="assets/img/anim-final-dark.mp4" type="video/mp4">
+</video>
+
+
+<body>
+
+  <!-- Loader -->
+
+  <div id="loader">
+    <div id="shadow"></div>
+    <div id="box"></div>
+  </div>
+
+  <script>
+    var change=0;
+    
+
+    document.onreadystatechange = function () {
+      if (document.readyState === 'complete') {
+        $('#loader').fadeOut(250);
+        $('#bienvenue').fadeIn(200);
+      }
+    
+      $("#continuer").click(function(){
+        $('#bienvenue').fadeOut(250);
+        $('#choix').fadeIn(200);
+      })
+    }
+  </script>
+
+
+  <header id="header">
+    <div class="container">
+
+      <a href="index.html" id="titre_light" style="display: none;"><img src="assets/img/titre_.png" class="titre"></img></a>
+      <a href="index.html" id="titre_dark"><img src="assets/img/titre_dark.png" class="titre"></img></a>
+      
+      <h2><span>Étudiante BUT MMI</span></h2>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link active" href="#header">Accueil</a></li>
+          <li><a class="nav-link" href="#about">A propos</a></li>
+          <li><a class="nav-link" href="#resume">CV</a></li>
+          <li id="projets"><a class="nav-link" href="#services">Projets</a></li>
+          <li><a class="nav-link" href="#portfolio">Portfolio</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+          <li>
+            <div class="mode theme_button">  
+              <input type="checkbox"class="theme__toggle change"id="theme"role="switch"name="theme"value="dark"/>
+              <span class="theme__fill"></span>
+              <span class="theme__icon">
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+                <span class="theme__icon-part"></span>
+              </span>   
+            </div>          
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <div class="social-links">
+        <a href="https://www.facebook.com/astelie.henryon/" class="facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.instagram.com/ast3li3/" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/astelie-henryon/" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
+        <a href="https://github.com/Astelie07" class="linkedin" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://sketchfab.com/astelie" class="sketchfab" target="_blank">
+          <img src="assets/icon/sketchfab.svg" width="20px" class="icon_light">
+          <img src="assets/icon/light/sketchfab-d.svg" width="20px" class="icon_dark" style="display:none;">
+        </a>
+        <a href="#" class="discord"><i class="bi bi-discord" target="_blank"></i></a>
+        <div id="Pseudo_disc">_astelie</div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ======= About Section ======= -->
+  <section id="about" class="about">
+
+    <!-- ======= About Me ======= -->
+    <div class="about-me container">
+
+      <div class="section-title">
+        <h2>A propos</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4" data-aos="fade-right">
+          <img src="assets/img/me.gif" class="img-fluid" alt="">
+        </div>
+        <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
+          <h3>Étudiante MMI</h3>
+          <p class="fst-italic">
+            Actuellement en troisième année de BUT MMI, je souhaite trouver un métier dans le domaine du jeu vidéo pour, un jour, créer les miens.
+          </p>
+          <div class="row">
+            <div class="col-lg-6">
+              <ul>
+                <li><i class="bi bi-chevron-right"></i> <strong>Anniversaire:</strong> <span>7 juillet 2003</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Tel:</strong> <span>+33 7 82 41 78 66</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>20</span></li>
+              </ul>
+            </div>
+            <div class="col-lg-6">
+              <ul>
+                <li><i class="bi bi-chevron-right"></i> <strong>Diplome:</strong> <span>BUT</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Mail:</strong> <span>henryonastelie@gmail.com</span></li>
+              </ul>
+            </div>
+          </div>
+          <p>
+            Je suis une jeune française passionnée depuis toute petite par les jeux vidéos, le dessin et beaucoup d'autres formes d'art. Celles-ci m'ont inspiré et je souhaite aujourd'hui en inspirer d'autres. Travaillant depuis plus de deux ans maintenant avec ma soeur sur un projet malheureusement encore sans nom, je continue de noter des idées de personnages, de scénarios ou d'ennemis qui me semblent intéressants.
+            <br>Ayant beaucoup trop d'idées à la fois, j'ai actuellement des carnets de notes remplis d'idées pour 3 jeux, dont mes connaissances actuelles ne me permettent pas de démarrer un réel développement. 
+            </br> Si j'ai l'air d'avoir une idée précise de ce que je veux faire, j'ai surtout des capacités me permettant de réaliser des tâches très différentes de ce que je vise.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- End About Me -->
+
+    <!-- ========= Qualités ==========-->
+
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Qualités</h2>
+      </div>
+
+      <div id="qualites" style="color:white;position: relative;">
+
+      <div class="row" style="text-align:center">
+
+        <div class="col-md-3 offset-md-2 qualite">
+            <h3>Organisée</h3>
+        </div>
+
+        <div class="col-md-3 offset-md-2 qualite">
+            <h3>Sait improviser</h3>
+        </div>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-3 qualite">
+            <h3>Apprends vite</h3>
+        </div>
+
+        <div class="col-md-4">
+          <img src="assets/img/cat.gif" id="cat">
+      </div>
+
+        <div class="col-md-3 offset-md-1 qualite">
+            <h3>Franche</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+    </div>
+
+      <!-- ======= interets ======= -->
+    <div class="interests container">
+
+      <div class="section-title">
+        <h2>Centres d'interets</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="ri-edit-2-line icon_light" style="color: black;"></i>
+            <i class="ri-edit-2-line icon_dark" style="color: CEE5F2;display: none;"></i>
+            <h3>Ecriture et narration</h3>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="ri-palette-fill icon_light" style="color: black;"></i>
+            <i class="ri-palette-fill icon_dark" style="color: CEE5F2;display: none;"></i>
+            <h3>Dessin</h3>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="ri-tools-fill icon_light" style="color: black;"></i>
+            <i class="ri-tools-fill icon_dark" style="color: CEE5F2;display: none;"></i>
+            <h3>Cosplay</h3>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="ri-gamepad-line icon_light" style="color: black;"></i>
+            <i class="ri-gamepad-line icon_dark" style="color: CEE5F2;display: none;"></i>
+            <h3>Gaming</h3>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="ri-film-line icon_light" style="color: black;"></i>
+            <i class="ri-film-line icon_dark" style="color: CEE5F2;display: none;"></i>
+            <h3>Cinéma</h3>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="ri-headphone-line icon_light" style="color: black;"></i>
+            <i class="ri-headphone-line icon_dark" style="color: CEE5F2;display: none;"></i>
+            <h3>Musique</h3>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End Interests -->
+
+    <!-- ======= Competences  ======= -->
+    <div class="skills container">
+
+      <div class="section-title">
+        <h2>Compétences et connaissances</h2>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-3">
+          <i class="ri-html5-fill ri-7x icon_light" style="color:black"></i>
+          <i class="ri-html5-fill ri-7x icon_dark" style="color: CEE5F2;display: none;"></i>
+          <p>HTML 5</p>
+        </div>
+        <div class="col-md-3">
+          <i class="ri-braces-line ri-7x icon_light" style="color:black"></i>
+          <i class="ri-braces-line ri-7x icon_dark" style="color: CEE5F2;display: none;"></i>
+          <p>Javascript</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-server icon_light" style="font-size: 6rem;color:black; "></i>
+          <i class="bi bi-server icon_dark" style="font-size: 6rem;color: CEE5F2;display: none;"></i>
+          <p style="margin: 25px auto 25px auto;">SQL myAdmin</p>
+        </div>
+        <div class="col-md-3">
+          <i class="ri-mark-pen-fill ri-7x icon_light" style="color:black"></i>
+          <i class="ri-mark-pen-fill ri-7x icon_dark" style="color: CEE5F2;display: none;"></i>
+          <p>Graphisme</p>
+        </div>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-3">
+          <i class="ri-css3-fill ri-7x icon_light" style="color:black"></i>
+          <i class="ri-css3-fill ri-7x icon_dark" style="color: CEE5F2;display: none;"></i>
+          <p>CSS 3</p>
+        </div>
+        <div class="col-md-3">
+          <i class="ri-code-s-slash-line ri-7x icon_light" style="color:black"></i>
+          <i class="ri-code-s-slash-line ri-7x icon_dark" style="color: CEE5F2;display: none;"></i>
+          <p>PHP</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-wordpress icon_light" style="font-size: 6rem;color:black"></i>
+          <i class="bi bi-wordpress icon_dark" style="font-size: 6rem;color: CEE5F2;display: none;"></i>
+          <p style="margin: 15px auto 15px auto;">Wordpress - CMS</p>
+        </div>
+        <div class="col-md-3">
+          <i class="ri-chat-smile-2-fill ri-7x icon_light"  style="color:black"></i>
+          <i class="ri-chat-smile-2-fill ri-7x icon_dark" style="color: CEE5F2;display: none;"></i>
+          <p>Communication</p>
+        </div>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-3">
+          <i class="bi bi-chat-text-fill icon_light" style="font-size: 6rem;color:black"></i>
+          <i class="bi bi-chat-text-fill icon_dark" style="font-size: 6rem;color: CEE5F2;display: none;"></i>
+          <p>Anglais <br>Espagnol et Japonais</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/adobe.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/adobe-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Suite Adobe</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-megaphone-fill icon_light" style="font-size: 6rem;color:black"></i>
+          <i class="bi bi-megaphone-fill icon_dark" style="font-size: 6rem;color: CEE5F2;display: none;"></i>
+          <p>Marketing</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-camera-reels-fill icon_light" style="font-size: 6rem;color:black"></i>
+          <i class="bi bi-camera-reels-fill icon_dark" style="font-size: 6rem;color: CEE5F2;display: none;"></i>
+          <p>Audiovisuel</p>
+        </div>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-3">
+          <img src="assets/icon/react.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/react-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>React</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/figma.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/figma-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Figma</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/canva.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/canva-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Canva</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/node.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/node-js-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Node JS</p>
+        </div>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-3">
+          <img src="assets/icon/vite.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/vite-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Vite JS</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/blender.png" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/blender-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Blender</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-github icon_light" style="font-size: 6rem;color:black"></i>
+          <i class="bi bi-github icon_dark" style="font-size: 6rem;color: CEE5F2;display: none;"></i>
+          <p>Git Hub</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/c-sharp-solid.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/c-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>C#</p>
+        </div>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-3">
+          <img src="assets/icon/unity.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/unity-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Unity</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/csp.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/csp-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Clip Studio<br>Paint</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/angular.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/angular-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Angular</p>
+        </div>
+        <div class="col-md-3">
+          <img src="assets/icon/tailwind.svg" width="120px" style="margin-top:15px" class="icon_light">
+          <img src="assets/icon/light/tailwind-d.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+          <p>Tailwind</p>
+        </div>
+
+        <div class="row" style="text-align:center">
+          <div class="col-md-3">
+            <img src="assets/icon/linux.svg" width="120px" style="margin-top:30px" class="icon_light">
+            <img src="assets/icon/light/linux-d.svg" width="120px" style="margin-top:30px;display: none;" class="icon_dark">
+            <p>Linux</p>
+          </div>
+          <div class="col-md-3">
+            <img src="assets/icon/python.svg" width="110px" style="margin-top:15px" class="icon_light">
+            <img src="assets/icon/light/python-d.svg" width="110px" style="margin-top:15px;display: none;" class="icon_dark">
+            <p>Python</p>
+          </div>
+          <div class="col-md-3">
+            <img src="assets/icon/less.svg" width="120px" style="margin-top:15px" class="icon_light">
+            <img src="assets/icon/light/less-dark.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+            <p>Less JS</p>
+          </div>
+          <div class="col-md-3">
+            <img src="assets/icon/poo.svg" width="120px" style="margin-top:25px;margin-bottom: 15px;" class="icon_light">
+            <img src="assets/icon/light/poo-d.svg" width="120px" style="margin-top:25px;display: none;margin-bottom: 15px;" class="icon_dark">
+            <p>POO</p>
+          </div>
+        </div>
+
+        <div class="row" style="text-align:center">
+          <div class="col-md-3">
+            <img src="assets/icon/drupal-dark.svg" width="120px" style="margin-top:30px" class="icon_light">
+            <img src="assets/icon/light/drupal.svg" width="120px" style="margin-top:15px;display: none;" class="icon_dark">
+            <p>Drupal</p>
+          </div>
+          <div class="col-md-3">
+            <img src="assets/icon/express-dark.svg" width="110px" style="margin-top:65px;margin-bottom:35px;" class="icon_light">
+            <img src="assets/icon/light/express.svg" width="110px" style="margin-top:65px;margin-bottom:35px;display: none;" class="icon_dark">
+            <p>Express</p>
+          </div>
+          <div class="col-md-3">
+            <i class="bi bi-filetype-scss icon_light" style="font-size: 6rem;color:black"></i>
+            <i class="bi bi-filetype-scss icon_dark" style="font-size: 6rem;color: CEE5F2;display: none;"></i>
+            <p>SCSS</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row skills-content">
+
+        <div class="section-title" style="margin:15px auto;">
+          <h2>Logiciels Adobe maîtrisés</h2>
+        </div>
+
+        <div class="col-lg-8 offset-lg-2">
+
+          <div class="progress">
+            <span class="skill">Photoshop <i class="val">90%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">Illustrator <i class="val">75%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">Premiere Pro <i class="val">70%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">InDesign <i class="val">70%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">After Effects <i class="val">55%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">Lightroom <i class="val">50%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div><!-- End Skills -->
+
+  </section><!-- End About Section -->
+
+  <!-- ======= Resume Section ======= -->
+  <section id="resume" class="resume">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>CV</h2>
+        <p>Mon CV</p>
+      </div>
+
+      <div class="row">
+
+          <h3 class="resume-title">Télécharger CV</h3>
+          <div class="resume-item">
+            <a href="assets/download/CV_HENRYON_Astelie.pdf" target="_blank" style="text-decoration:underline">Télécharger ici</a>
+          </div>
+
+          <h3 class="resume-title">CV vidéo (en anglais)</h3>
+          <div class="resume-item">
+            <h4>Cette vidéo date de 2022, et est donc obsolète sur certains points.</h4>
+            <iframe style="max-width:560px;max-height:315px;" src="https://www.youtube.com/embed/rHLVfr2myaE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          
+      </div>
+
+    </div>
+  </section><!-- End Resume Section -->
+
+  <!-- ======= Projets ======= -->
+  <section id="services" class="services">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Projets</h2>
+        <p>Mes projets</p>
+      </div>
+
+      <h3>RPG fantasy :</h3>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p>Ce jeu m'est venu à l'idée il y maintenant trois ans, et même si çe n'est pas le premier que j'ai imaginé, c'est en revanche celui qui est le plus avancé.<br>
+          Il s'agit d'un RPG de fantaisie parodique.<br>
+        En effet, même si je n'ai pas encore commencé un réel développement, l'histoire du jeu est écrite, les personnages principaux sont crées, et le gameplay est décidé.<br>
+        </p>
+      </div>
+    </div>
+
+  <div class="row">
+      <div class="col-lg-2 col-md-4" style="text-align: center;">
+        <p>Une première version</p>
+        <img src="assets/img/projet/mie.jpg" style="max-height:350px" alt="Premier design de Mie">
+      </div>
+      <div class="col-lg-4 col-md-8" style="text-align: center;">
+        <p>Puis redessiné par <a href="https://www.instagram.com/firebell1703/"><strong>Honorine Henryon</strong></a></p>
+        <img src="assets/img/projet/mie-nn.png" style="max-height:350px" alt="Mie dans le style de @firebell">
+      </div>
+      <div class="col-lg-6 col-md-12" style="text-align: center;">
+        <p>Et je crée la version 3D sur Blender</p>
+        <video autoplay loop id="Mie" style="height: 350px;">
+          <source src="assets/img/projet/me-render.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    </div>
+  </section><!-- Fin projet -->
+
+  <!-- ======= Portfolio Section ======= -->
+  <section id="portfolio" class="portfolio">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Portfolio</h2>
+        <p>Mes réalisations</p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <ul id="portfolio-flters">
+            <li data-filter="*" class="filter-active">Tout</li>
+            <li data-filter=".filter-site">UX/UI</li>
+            <li data-filter=".filter-vid">Vidéo</li>
+            <li data-filter=".filter-graph">Graphisme</li>
+            <li data-filter=".filter-mode">Modélisation</li>
+            <li data-filter=".filter-jv">Jeu vidéo</li>
+            <li data-filter=".filter-des">Dessin</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- //---------------------------------------------------- -->
+
+      <!-- ------------------------------SAE501 - The Escape---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-jv">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/escape-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>The Escape</h4>
+              <p>Projet finale de MMI3</p>
+              <div class="portfolio-links">
+                <a href="portfolio-escape.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------Altea---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/altea-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Altea</h4>
+              <p>Hackathon de décembre 2023</p>
+              <div class="portfolio-links">
+                <a href="portfolio-altea.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      <!-- ------------------------------Dashboard Figma---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/dashboard-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Dashboard Figma</h4>
+              <p>Entrainement à Figma avec un dashboard</p>
+              <div class="portfolio-links">
+                <a href="portfolio-dashboard.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------Inktober 2023---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-des">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/inktober-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Inktober 2023</h4>
+              <p>31 dessins en 1 mois</p>
+              <div class="portfolio-links">
+                <a href="portfolio-inktober23.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------Doctolib---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/doctolib-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Faux Doctolib</h4>
+              <p>Entrainement aux requêtes et bdd</p>
+              <div class="portfolio-links">
+                <a href="portfolio-doctolib.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------Rollaball---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-jv">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/rollaball-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Rollaball</h4>
+              <p>Entrainement Unity 3D</p>
+              <div class="portfolio-links">
+                <a href="portfolio-rollaball.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------Modélisation Seo of Thieves---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-mode">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/scene-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Modélisations Blender</h4>
+              <p>Créations inspirées du jeu Sea of Thieves</p>
+              <div class="portfolio-links">
+                <a href="portfolio-3d-sot.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------First fps Unity---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-jv">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/fps-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Test FPS Unity</h4>
+              <p>Premier test d'un FPS sur Unity</p>
+              <div class="portfolio-links">
+                <a href="portfolio-fpsUnity.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------Site de rouen---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/rouen-figma-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Figma site Rouen</h4>
+              <p>Recréation du site de Rouen sur Figma</p>
+              <div class="portfolio-links">
+                <a href="portfolio-rouen.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>              
+
+      <!-- 18------------------------------Graph 3 (ppp)---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-graph">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/ppp_afiche_m.png" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Projet Personnel et Professionnel</h4>
+            <p>Interview d'anciens élèves et affiche fictive</p>
+            <div class="portfolio-links">
+              <a href="portfolio-ppp.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ------------------------------First 2D Unity---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-jv">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/2dtest-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Test 2d Unity</h4>
+              <p>Premier test en 2D sur Unity</p>
+              <div class="portfolio-links">
+                <a href="portfolio-2dUnity.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ------------------------------Figma Or3o---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/or3o-min.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Figma Or3o</h4>
+              <p>"Faite un site pour un·e artiste que vous aimez"</p>
+              <div class="portfolio-links">
+                <a href="portfolio-or3o.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 17------------------------------Graph 2 (3d)---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-mode">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/3d_rendu2_m.png" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Modélisation Jinx Bomb</h4>
+            <p>Modélisation d'une bombe de Jinx (League Of Legends) avec Blender</p>
+            <div class="portfolio-links">
+              <a href="portfolio-blender.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ------------------------------Omniversus---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/omniversus.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Omniversus</h4>
+              <p>Figma inspiration "Multiversus"</p>
+              <div class="portfolio-links">
+                <a href="portfolio-omniversus.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 16------------------------------Vidéo animal crossing---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-vid">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/animal_crossing.png" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Animal crossing contre le covid ?</h4>
+            <p>Interview animal crossing</p>
+            <div class="portfolio-links">
+              <a href="portfolio-acnh.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15------------------------------SAE 303---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/site_303_min.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Tableau de bord</h4>
+              <p>Création d'un tableau de bord sur le covid, dans le département de la Drôme</p>
+              <div class="portfolio-links">
+                <a href="portfolio-303.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 14------------------------------Graph 1 (pictos)---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-graph">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/crea_graph_affiche_m.jpg" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Pictogrammes MMI</h4>
+            <p>Création de pictogrammes, montage et affiche pour les matières MMI</p>
+            <div class="portfolio-links">
+              <a href="portfolio-picto.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13------------------------------Vidéo Crescendo---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-vid">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/crescendo.png" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Crescendo vidéo</h4>
+            <p>Montage en creshendo</p>
+            <div class="portfolio-links">
+              <a href="portfolio-crescendo.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Creshendo"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+      <!-- 12------------------------------Emotes Ocpacity---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-des">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/emote_m.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Emotes <strong>OpacityPST</strong></h4>
+              <p>Emotes sur commande du streamer OpacityPST</p>
+              <div class="portfolio-links">
+                <a href="portfolio-emote.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 11------------------------------Graph 4 (E.story)---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-graph">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/estrory_moyen.png" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>E.story</h4>
+            <p>Création d'un évènement fictif et sa communication</p>
+            <div class="portfolio-links">
+              <a href="portfolio-estory.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10------------------------------Potes lycée---------------------------------------------------------------- -->
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-des">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/dessin_3_1.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Amis de mémoire</h4>
+              <p>Dessin de mon groupe d'amis de lycée pour nos un an de séparation</p>
+              <div class="portfolio-links">
+                <a href="portfolio-pote.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 9------------------------------Graph 6 (mmi foundry)---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-graph">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/logo_moyen_min.jpg" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>MMI Foundry</h4>
+            <p>Création d'une identité visuelle pour une marque fictive</p>
+            <div class="portfolio-links">
+              <a href="portfolio-foundry.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8------------------------------Graph 5 (Mascottes)---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-graph">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/parry_min.png" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Mascottes</h4>
+            <p>Mascottes créees pour un publique cible de 5 à 12 ans</p>
+            <div class="portfolio-links">
+              <a href="portfolio-mascotte.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7------------------------------Vidéo film noir---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-vid">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/film_noir.png" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Film noir</h4>
+            <p>Scénario film noir</p>
+            <div class="portfolio-links">
+              <a href="portfolio-film_noir.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+      <!-- 6------------------------------Dessin P&F---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-des">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/dessin_1_1.png" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Auto-protrait</h4>
+              <p>Autoportrait dans le style de Dan Povenmire, créateur (notamment) de la série Phineas et Ferb</p>
+              <div class="portfolio-links">
+                <a href="portfolio-pf.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 5------------------------------SAE 105/103---------------------------------------------------------------- -->
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-site">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/sae105_accueil.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Suki Burger</h4>
+              <p>Création d'un food-truck, d'un site et de son identité visuelle</p>
+              <div class="portfolio-links">
+                <a href="portfolio-suki.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 4------------------------------Affiche MMI---------------------------------------------------------------- -->
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-graph">
+        <div class="portfolio-wrap">
+          <img src="assets/img/portfolio/affiche_min.jpg" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4>Affiche MMI</h4>
+            <p>Création d'une affiche pour la formation MMI</p>
+            <div class="portfolio-links">
+              <a href="portfolio-affiche.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+      <!-- 3------------------------------Dessin princesses---------------------------------------------------------------- -->
+
+      <div class="row portfolio-container">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-des">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/princesses/princesse_min.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Princesses</h4>
+              <p>Dessins chibi sur papier de princesse Disney</p>
+              <div class="portfolio-links">
+                <a href="portfolio-princesse.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 2------------------------------Dessin monstres---------------------------------------------------------------- -->
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-des">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/monstres/monstre_min.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Monstres</h4>
+              <p>Dessins de monstres</p>
+              <div class="portfolio-links">
+                <a href="portfolio-monstres.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- 1------------------------------Dessins carnet---------------------------------------------------------------- -->
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-des">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/dessins/dessin_min.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Dessins</h4>
+              <p>Dessins de carnet</p>
+              <div class="portfolio-links">
+                <a href="portfolio-dessins.html" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Portfolio Details"><i class="bx bx-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Portfolio Section -->
+
+ <!-- ======= Contact Section ======= -->
+ <section id="contact" class="contact">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Contact</h2>
+      <p>Contactez moi</p>
+    </div>
+
+    <div class="row mt-2">
+
+      <div class="col-md-12 mt-4 mt-md-0 d-flex align-items-stretch">
+        <div class="info-box">
+          <i class="bx bx-share-alt"></i>
+          <h3>Réseaux sociaux</h3>
+          <div class="social-links">
+            <a href="https://www.facebook.com/astelie.henryon/" class="facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/ast3li3/" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/astelie-henryon/" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="https://github.com/Astelie07" class="github" target="_blank"><i class="bi bi-github"></i></a>
+            <a href="https://sketchfab.com/astelie" class="sketchfab" target="_blank">
+              <img src="assets/icon/sketchfab.svg" width="16px" class="icon_light">
+              <img src="assets/icon/light/sketchfab-d.svg" width="16px" class="icon_dark" style="display:none;">
+            </a>
+            <a href="#" id="discord_contact"><i class="bi bi-discord" target="_blank"></i></a>
+            <p id="pseudo_contact" style="display: none;">_astelie</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-4 d-flex align-items-stretch">
+        <div class="info-box">
+          <i class="bx bx-envelope"></i>
+          <h3>Email :</h3>
+          <p><a href="mailto:henryonastelie@gmail.com" style="text-decoration: underline;">henryonastelie@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="col-md-6 mt-4 d-flex align-items-stretch">
+        <div class="info-box">
+          <i class="bx bx-phone-call"></i>
+          <h3>Téléphone</h3>
+          <p>+33 7 82 41 78 66</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- Fin Contact-->
+
+<!-- Vendor JS -->
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main_index.js"></script>
+
+</body>
+
+</html>
