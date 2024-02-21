@@ -184,6 +184,7 @@ body {
   #Pseudo_disc{
     display: none;
     margin: 5px 10px;
+    color: white;
   }
   
   #header .social-links a:hover {
